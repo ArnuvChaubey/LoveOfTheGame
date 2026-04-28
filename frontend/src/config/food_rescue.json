@@ -1,0 +1,44 @@
+{
+  "id": "food_rescue",
+  "name": "Food Rescue",
+  "tagline": "Rescue surplus food before it spoils",
+  "accentColor": "#16a34a",
+  "entityLabels": {
+    "request": "Food Donation",
+    "requester": "Donor",
+    "provider": "Shelter / Community",
+    "volunteer": "Rescue Volunteer",
+    "resource": "Food"
+  },
+  "resourceTypes": [
+    { "id": "cooked_meal", "label": "Cooked Meal", "icon": "🍛" },
+    { "id": "raw_ingredients", "label": "Raw Ingredients", "icon": "🥬" },
+    { "id": "packaged_food", "label": "Packaged Food", "icon": "📦" },
+    { "id": "beverages", "label": "Beverages", "icon": "🥤" }
+  ],
+  "dietaryCategories": ["vegetarian", "non-vegetarian", "vegan", "jain", "halal"],
+  "scarcityMap": {
+    "cooked_meal": 0.7,
+    "raw_ingredients": 0.3,
+    "packaged_food": 0.2,
+    "beverages": 0.1
+  },
+  "urgencyWeights": {
+    "time_decay": 0.35,
+    "scarcity": 0.15,
+    "isolation": 0.2,
+    "match_failure": 0.2,
+    "source_trust": 0.1
+  },
+  "maxViabilityHours": 4,
+  "maxMatchRadiusKm": 15,
+  "matchingConstraints": ["dietary_compatibility", "capacity", "proximity"],
+  "nlpPrompt": "Extract the following from this food donation message. Return ONLY valid JSON, no markdown, no explanation.\n\n{\"food_type\": \"string (cooked_meal/raw_ingredients/packaged_food/beverages)\", \"food_description\": \"string (what the food is)\", \"quantity\": \"number (servings or kg)\", \"quantity_unit\": \"string (servings/kg/packets/liters)\", \"dietary_category\": \"string (vegetarian/non-vegetarian/vegan/jain/halal)\", \"location_text\": \"string (where the food is)\", \"available_until\": \"string (time the food will be available until, in HH:MM format, 24hr)\", \"contact\": \"string (phone number if mentioned, else null)\", \"urgency_keywords\": \"array of strings (any words suggesting urgency like 'urgent', 'closing soon', 'please help', 'expiring')\"}\n\nMessage: ",
+  "sourceTrustLevels": {
+    "verified_restaurant": 1,
+    "registered_ngo": 0.8,
+    "known_donor": 0.6,
+    "unverified": 0.4,
+    "anonymous": 0.2
+  }
+}

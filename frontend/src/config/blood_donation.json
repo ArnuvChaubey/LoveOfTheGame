@@ -1,0 +1,57 @@
+{
+  "id": "blood_donation",
+  "name": "Blood Donation",
+  "tagline": "Connect donors to patients in need",
+  "accentColor": "#dc2626",
+  "entityLabels": {
+    "request": "Blood Request",
+    "requester": "Patient",
+    "provider": "Donor",
+    "volunteer": "Transport Volunteer",
+    "resource": "Blood"
+  },
+  "resourceTypes": [
+    { "id": "whole_blood", "label": "Whole Blood", "icon": "🩸" },
+    { "id": "plasma", "label": "Plasma", "icon": "💉" },
+    { "id": "platelets", "label": "Platelets", "icon": "🔬" }
+  ],
+  "bloodGroups": ["O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"],
+  "scarcityMap": {
+    "O-": 0.95,
+    "O+": 0.15,
+    "A-": 0.75,
+    "A+": 0.2,
+    "B-": 0.8,
+    "B+": 0.25,
+    "AB-": 0.9,
+    "AB+": 0.3
+  },
+  "urgencyWeights": {
+    "time_decay": 0.35,
+    "scarcity": 0.25,
+    "isolation": 0.15,
+    "match_failure": 0.15,
+    "source_trust": 0.1
+  },
+  "maxViabilityHours": 48,
+  "maxMatchRadiusKm": 50,
+  "matchingConstraints": ["blood_type_compatibility", "donor_cooldown", "proximity"],
+  "nlpPrompt": "Extract the following from this blood donation request message. Return ONLY valid JSON, no markdown, no explanation.\n\n{\"resource_type\": \"string (whole_blood/plasma/platelets)\", \"blood_group\": \"string (O-/O+/A-/A+/B-/B+/AB-/AB+)\", \"units_needed\": \"number\", \"hospital\": \"string (hospital name)\", \"location_text\": \"string (city or area)\", \"deadline_hours\": \"number (hours until needed)\", \"contact\": \"string (phone number if mentioned, else null)\", \"urgency_keywords\": \"array of strings\"}\n\nMessage: ",
+  "bloodCompatibility": {
+    "O-": ["O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"],
+    "O+": ["O+", "A+", "B+", "AB+"],
+    "A-": ["A-", "A+", "AB-", "AB+"],
+    "A+": ["A+", "AB+"],
+    "B-": ["B-", "B+", "AB-", "AB+"],
+    "B+": ["B+", "AB+"],
+    "AB-": ["AB-", "AB+"],
+    "AB+": ["AB+"]
+  },
+  "sourceTrustLevels": {
+    "verified_hospital": 1,
+    "registered_ngo": 0.8,
+    "known_user": 0.6,
+    "unverified": 0.4,
+    "anonymous": 0.2
+  }
+}
