@@ -1,0 +1,45 @@
+{
+  "id": "disaster_relief",
+  "name": "Disaster Relief",
+  "tagline": "Coordinate relief efforts in real-time",
+  "accentColor": "#ea580c",
+  "entityLabels": {
+    "request": "Relief Request",
+    "requester": "Affected Area",
+    "provider": "Relief Volunteer",
+    "volunteer": "Field Volunteer",
+    "resource": "Relief Supplies"
+  },
+  "resourceTypes": [
+    { "id": "drinking_water", "label": "Drinking Water", "icon": "💧" },
+    { "id": "food_packets", "label": "Food Packets", "icon": "🍱" },
+    { "id": "medicine", "label": "Medicine", "icon": "💊" },
+    { "id": "shelter", "label": "Tarpaulin/Shelter", "icon": "🏕️" },
+    { "id": "clothing", "label": "Clothing", "icon": "👕" }
+  ],
+  "scarcityMap": {
+    "medicine": 0.9,
+    "drinking_water": 0.5,
+    "shelter": 0.7,
+    "food_packets": 0.4,
+    "clothing": 0.3
+  },
+  "urgencyWeights": {
+    "time_decay": 0.4,
+    "scarcity": 0.2,
+    "isolation": 0.2,
+    "match_failure": 0.1,
+    "source_trust": 0.1
+  },
+  "maxViabilityHours": 168,
+  "maxMatchRadiusKm": 100,
+  "matchingConstraints": ["resource_type_match", "vehicle_capacity", "proximity"],
+  "nlpPrompt": "Extract the following from this disaster relief request message. Return ONLY valid JSON, no markdown, no explanation.\n\n{\"resource_type\": \"string (drinking_water/food_packets/medicine/shelter/clothing)\", \"quantity\": \"number\", \"quantity_unit\": \"string (liters/packets/boxes/units)\", \"location_text\": \"string (village/area name)\", \"families_affected\": \"number (if mentioned, else null)\", \"deadline_hours\": \"number (hours until critical, else 24)\", \"contact\": \"string (phone number if mentioned, else null)\", \"urgency_keywords\": \"array of strings\"}\n\nMessage: ",
+  "sourceTrustLevels": {
+    "verified_government": 1,
+    "registered_ngo": 0.8,
+    "field_worker": 0.6,
+    "unverified": 0.4,
+    "anonymous": 0.2
+  }
+}
