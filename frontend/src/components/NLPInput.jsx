@@ -45,8 +45,9 @@ export default function NLPInput({ config, onAddRequest, toast }) {
         lat: loc.lat,
         lng: loc.lng,
       });
-    } catch {
-      toast("Gemini failed. Fill fields manually.");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown Gemini error";
+      toast(`Gemini failed: ${message}`);
       setForm({
         resourceType: config.resourceTypes[0].id,
         foodDescription: "",
